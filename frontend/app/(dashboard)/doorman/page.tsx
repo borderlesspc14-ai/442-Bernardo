@@ -35,7 +35,7 @@ export default function DoormanPage() {
         actions={
           <div className="flex gap-2">
             <Button asChild variant="outline">
-              <Link href="/doorman/occurrences/new">
+              <Link href="/doorman/occurrences">
                 <AlertTriangle className="mr-2 size-4" />
                 Nova Ocorrencia
               </Link>

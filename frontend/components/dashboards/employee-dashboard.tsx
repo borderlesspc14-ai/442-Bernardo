@@ -28,7 +28,7 @@ export function EmployeeDashboard() {
           </CardHeader>
           <CardContent className="grid gap-2">
             <Button asChild className="w-full justify-start">
-              <Link href="/doorman/visitors/new">
+              <Link href="/doorman/visitors">
                 <UserPlus className="mr-2 size-4" />
                 Registrar Visitante
               </Link>
@@ -40,7 +40,7 @@ export function EmployeeDashboard() {
               </Link>
             </Button>
             <Button asChild variant="outline" className="w-full justify-start bg-transparent">
-              <Link href="/doorman/occurrences/new">
+              <Link href="/doorman/occurrence">
                 <AlertTriangle className="mr-2 size-4" />
                 Registrar Ocorrencia
               </Link>

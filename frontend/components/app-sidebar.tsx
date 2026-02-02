@@ -65,8 +65,8 @@ const residentNav: NavItem[] = [
 ]
 
 const financeNav: NavItem[] = [
-  { title: "Cobrancas", href: "/finance/charges", icon: Receipt, roles: ["admin", "resident"] },
-  { title: "Relatorios", href: "/finance/reports", icon: FileText, roles: ["admin"] },
+  { title: "Cobrancas", href: "/resident/billing", icon: Receipt, roles: ["admin", "resident"] },
+  { title: "Relatorios", href: "/admin/financial", icon: FileText, roles: ["admin"] },
 ]
 
 export function AppSidebar() {

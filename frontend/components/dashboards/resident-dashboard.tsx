@@ -46,13 +46,13 @@ export function ResidentDashboard() {
           </CardHeader>
           <CardContent className="grid gap-2">
             <Button asChild className="w-full justify-start">
-              <Link href="/resident/visitors/new">
+              <Link href="/resident/visitors">
                 <UserPlus className="mr-2 size-4" />
                 Pre-cadastrar Visitante
               </Link>
             </Button>
             <Button asChild variant="outline" className="w-full justify-start bg-transparent">
-              <Link href="/finance/charges">
+              <Link href="/resident/billing">
                 <Receipt className="mr-2 size-4" />
                 Ver Cobrancas
               </Link>
@@ -108,7 +108,7 @@ export function ResidentDashboard() {
                   </div>
                 ))}
                 <Button variant="link" asChild className="h-auto p-0 text-xs">
-                  <Link href="/finance/charges">
+                  <Link href="/resident/billing">
                     Ver todas
                     <ArrowRight className="ml-1 size-3" />
                   </Link>
