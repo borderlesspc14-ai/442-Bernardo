@@ -114,6 +114,46 @@ export default function AuditPage() {
     return names[module] || module
   }
 
+  const formatCsvValue = (value: string) => {
+    const escaped = value.replace(/"/g, '""')
+    return `"${escaped}"`
+  }
+
+  const handleExportCsv = () => {
+    const headers = [
+      "Data/Hora",
+      "Usuario",
+      "Modulo",
+      "Acao",
+      "Descricao",
+      "IP",
+    ]
+
+    const rows = filteredLogs.map((log) => [
+      new Date(log.timestamp).toLocaleString("pt-BR"),
+      log.userName,
+      getModuleName(log.module),
+      log.action,
+      log.description,
+      log.ipAddress,
+    ])
+
+    const csv = [
+      headers.map(formatCsvValue).join(","),
+      ...rows.map((row) => row.map((cell) => formatCsvValue(String(cell))).join(",")),
+    ].join("\n")
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = `historico-acoes-${new Date().toISOString().slice(0, 10)}.csv`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }
+
   const todayLogs = logs.filter((log) => {
     const today = new Date().toDateString()
     return new Date(log.timestamp).toDateString() === today
@@ -173,7 +213,7 @@ export default function AuditPage() {
         <CardHeader>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle>Historico de Acoes</CardTitle>
-            <Button variant="outline">
+            <Button variant="outline" onClick={handleExportCsv}>
               <Download className="mr-2 h-4 w-4" />
               Exportar CSV
             </Button>

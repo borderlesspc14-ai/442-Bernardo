@@ -28,6 +28,10 @@ export function AppTopbar() {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
+  const handleProfile = () => {
+    router.push("/profile")
+  }
+
   const handleLogout = () => {
     logout()
     router.push("/login")
@@ -84,7 +88,7 @@ export function AppTopbar() {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleProfile}>
             <User className="mr-2 size-4" />
             <span>Perfil</span>
           </DropdownMenuItem>

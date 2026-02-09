@@ -69,6 +69,59 @@ export default function ResidentBillingPage() {
     return names[type] || type
   }
 
+  const formatCsvValue = (value: string) => {
+    const escaped = value.replace(/"/g, '""')
+    return `"${escaped}"`
+  }
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "paid":
+        return "Pago"
+      case "pending":
+        return "Pendente"
+      case "overdue":
+        return "Vencido"
+      default:
+        return status
+    }
+  }
+
+  const handleExportCsv = () => {
+    const headers = [
+      "Descricao",
+      "Tipo",
+      "Valor",
+      "Vencimento",
+      "Status",
+      "Data de Pagamento",
+    ]
+
+    const rows = payments.map((payment) => [
+      payment.description || getTypeName(payment.type),
+      getTypeName(payment.type),
+      formatCurrency(payment.amount),
+      new Date(payment.dueDate).toLocaleDateString("pt-BR"),
+      getStatusLabel(payment.status),
+      payment.paidAt ? new Date(payment.paidAt).toLocaleDateString("pt-BR") : "-",
+    ])
+
+    const csv = [
+      headers.map(formatCsvValue).join(","),
+      ...rows.map((row) => row.map((cell) => formatCsvValue(String(cell))).join(",")),
+    ].join("\n")
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = `historico-cobrancas-${new Date().toISOString().slice(0, 10)}.csv`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -117,7 +170,7 @@ export default function ResidentBillingPage() {
         <CardHeader>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle>Historico de Cobrancas</CardTitle>
-            <Button variant="outline">
+            <Button variant="outline" onClick={handleExportCsv}>
               <Download className="mr-2 h-4 w-4" />
               Exportar
             </Button>

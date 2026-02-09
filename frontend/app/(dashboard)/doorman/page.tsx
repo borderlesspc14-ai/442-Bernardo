@@ -41,7 +41,7 @@ export default function DoormanPage() {
               </Link>
             </Button>
             <Button asChild>
-              <Link href="/doorman/visitors/new">
+              <Link href="/doorman/visitors">
                 <UserPlus className="mr-2 size-4" />
                 Registrar Entrada
               </Link>
